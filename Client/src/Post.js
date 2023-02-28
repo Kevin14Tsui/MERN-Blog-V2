@@ -1,4 +1,4 @@
-export default function Posta() {
+export default function Post() {
   return (
     <div className="post">
       <div className="image">
