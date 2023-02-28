@@ -1,11 +1,11 @@
 import "./App.css";
 import Header from "./Header";
 import Post from "./Post";
-import { Router, Route } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 
 function App() {
   return (
-    <Router>
+    <Routes>
       <Route
         index
         element={
@@ -16,7 +16,7 @@ function App() {
         }
       />
       <Route path="{/login}" element={<div>login page</div>} />
-    </Router>
+    </Routes>
   );
 }
 
