@@ -1,6 +1,8 @@
 import { formatISO9075 } from "date-fns";
+import { Link } from "react-router-dom";
 // props to IndexPage
 export default function Post({
+  _id,
   title,
   summary,
   cover,
@@ -11,10 +13,15 @@ export default function Post({
   return (
     <div className="post">
       <div className="image">
-        <img src={"http://localhost:4000/" + cover} alt="" />
+        {/* id with the posts */}
+        <Link to={`/post/${_id}`}>
+          <img src={"http://localhost:4000/" + cover} alt="" />
+        </Link>
       </div>
       <div className="texts">
-        <h2>{title}</h2>
+        <Link to={`/post/${_id}`}>
+          <h2>{title}</h2>
+        </Link>
         <p className="info">
           {/* <a a href="/" className="author">
             {author.username}
