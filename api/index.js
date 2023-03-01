@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-const { default: mongoose } = require("mongoose");
+const mongoose = require("mongoose");
 const User = require("./models/User");
 const Post = require("./models/Post");
 const bcrypt = require("bcryptjs"); //enctype
@@ -64,11 +64,11 @@ app.get("/profile", (req, res) => {
   });
 });
 
-// app post
 app.post("/logout", (req, res) => {
   res.cookie("token", "").json("ok");
 });
 
+// app post
 app.post("/post", uploadMiddleware.single("file"), async (req, res) => {
   const { originalname, path } = req.file;
   const parts = originalname.split("."); //need the last part
@@ -98,6 +98,12 @@ app.get("/post", async (req, res) => {
       .sort({ createdAt: -1 })
       .limit(20)
   ); //select what info u need
+});
+// post id
+app.get("/post/:id", async (req, res) => {
+  const { id } = req.params;
+  const postDoc = await Post.findById(id).populate("author", ["username"]);
+  res.json(postDoc);
 });
 
 app.listen(4000);
