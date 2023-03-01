@@ -1,19 +1,18 @@
 import { formatISO9075 } from "date-fns";
 import { Link } from "react-router-dom";
-// props to IndexPage
+
 export default function Post({
   _id,
   title,
   summary,
   cover,
-  conten,
+  content,
   createdAt,
   author,
 }) {
   return (
     <div className="post">
       <div className="image">
-        {/* id with the posts */}
         <Link to={`/post/${_id}`}>
           <img src={"http://localhost:4000/" + cover} alt="" />
         </Link>
@@ -23,9 +22,7 @@ export default function Post({
           <h2>{title}</h2>
         </Link>
         <p className="info">
-          {/* <a a href="/" className="author">
-            {author.username}
-          </a> */}
+          <a className="author">{author.username}</a>
           <time>{formatISO9075(new Date(createdAt))}</time>
         </p>
         <p className="summary">{summary}</p>
