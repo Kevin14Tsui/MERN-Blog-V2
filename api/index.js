@@ -17,6 +17,7 @@ const secret = "67tg8ffs8g6wt7gh49";
 app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
 app.use(express.json());
 app.use(cookieParser());
+app.use("/uploads", express.static(__dirname + "/uploads")); //upload
 
 // connect mongodb
 mongoose.connect(
@@ -91,7 +92,12 @@ app.post("/post", uploadMiddleware.single("file"), async (req, res) => {
 });
 
 app.get("/post", async (req, res) => {
-  res.json(await Post.find().populate("author", ["username"])); //select what info u need
+  res.json(
+    await Post.find()
+      .populate("author", ["username"])
+      .sort({ createdAt: -1 })
+      .limit(20)
+  ); //select what info u need
 });
 
 app.listen(4000);

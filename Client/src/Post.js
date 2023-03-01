@@ -1,21 +1,27 @@
-export default function Post() {
+import { formatISO9075 } from "date-fns";
+// props to IndexPage
+export default function Post({
+  title,
+  summary,
+  cover,
+  conten,
+  createdAt,
+  author,
+}) {
   return (
     <div className="post">
       <div className="image">
-        <img
-          src="https://med.stanford.edu/news/all-news/2021/09/cat-fur-color-patterns/_jcr_content/main/image.img.780.high.jpg/cat_by-Kateryna-T-Unsplash.jpg"
-          alt="cat"
-        />
+        <img src={"http://localhost:4000/" + cover} alt="" />
       </div>
       <div className="texts">
-        <h2>Cat</h2>
+        <h2>{title}</h2>
         <p className="info">
-          <a href="s" className="author">
-            Kevin
-          </a>
-          <time>2023-2-28 16:45</time>
+          {/* <a a href="/" className="author">
+            {author.username}
+          </a> */}
+          <time>{formatISO9075(new Date(createdAt))}</time>
         </p>
-        <p className="summary">qweqeqeqwe</p>
+        <p className="summary">{summary}</p>
       </div>
     </div>
   );
