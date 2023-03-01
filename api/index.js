@@ -40,7 +40,10 @@ app.post("/login", async (req, res) => {
     // logged
     jwt.sign({ username, id: userDoc._id }, secret, {}, (err, token) => {
       if (err) throw err;
-      res.cookie("token", token).json("ok"); //setcookie
+      res.cookie("token", token).json({
+        id: userDoc._id,
+        username,
+      }); //setcookie
     });
   } else {
     res.status(400).json("Wrong credntials");
