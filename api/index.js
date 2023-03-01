@@ -5,12 +5,14 @@ const User = require("./models/User");
 const bcrypt = require("bcryptjs"); //enctype
 const app = express();
 const jwt = require("jsonwebtoken");
+const cookieParser = require("cookie-parser");
 
 const salt = bcrypt.genSaltSync(10);
 const secret = "67tg8ffs8g6wt7gh49";
 
 app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
 app.use(express.json());
+app.use(cookieParser());
 
 // connect mongodb
 mongoose.connect(
@@ -43,6 +45,15 @@ app.post("/login", async (req, res) => {
   } else {
     res.status(400).json("Wrong credntials");
   }
+});
+
+// get info
+app.get("/profile", (req, res) => {
+  const { token } = req.cookies;
+  jwt.verify(token, secret, {}, (err, info) => {
+    if (err) throw err;
+    res.json(info);
+  });
 });
 
 app.listen(4000);
