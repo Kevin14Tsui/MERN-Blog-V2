@@ -7,9 +7,9 @@ const app = express();
 const jwt = require("jsonwebtoken");
 
 const salt = bcrypt.genSaltSync(10);
-const secret = "67tg8ffs8gg9";
+const secret = "67tg8ffs8g6wt7gh49";
 
-app.use(cors());
+app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
 app.use(express.json());
 
 // connect mongodb
@@ -34,15 +34,15 @@ app.post("/login", async (req, res) => {
   const { username, password } = req.body;
   const userDoc = await User.findOne({ username });
   const passOk = bcrypt.compareSync(password, userDoc.password);
-  res.json(passOk);
-  // if (passOk) {
-  //   // logged
-  //   jwt.sign({ username, id: userDoc._id }, secret, {}, (err, token) => {});
-  //   if (err) throw err;
-  //   res.json(token);
-  // } else {
-  //   res.status(400).json("Wrong credntials");
-  // }
+  if (passOk) {
+    // logged
+    jwt.sign({ username, id: userDoc._id }, secret, {}, (err, token) => {
+      if (err) throw err;
+      res.cookie("token", token).json("ok"); //setcookie
+    });
+  } else {
+    res.status(400).json("Wrong credntials");
+  }
 });
 
 app.listen(4000);
